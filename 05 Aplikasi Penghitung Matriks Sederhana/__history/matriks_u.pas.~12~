@@ -1,0 +1,108 @@
+unit matriks_u;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.ComCtrls, Vcl.StdCtrls,
+  Vcl.Buttons;
+
+type
+  TForm2 = class(TForm)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    StringGrid1: TStringGrid;
+    StringGrid2: TStringGrid;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    StringGrid3: TStringGrid;
+    StringGrid4: TStringGrid;
+    StringGrid5: TStringGrid;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    BitBtn3: TBitBtn;
+    StringGrid6: TStringGrid;
+    StringGrid7: TStringGrid;
+    StringGrid8: TStringGrid;
+    BitBtn4: TBitBtn;
+    Label8: TLabel;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm2.BitBtn1Click(Sender: TObject);
+var
+  i, j: integer;
+  Mat: array [0 .. 2, 0 .. 1] of integer;
+  MatTran: array [0 .. 1, 0 .. 2] of integer;
+begin
+
+  // input komponen matrik dari stringgrid1
+  with StringGrid1 do
+    for i := 0 to 2 do
+      for j := 0 to 1 do
+        Mat[i, j] := StrtoInt(Cells[j, i]);
+
+  // Transpose matrik
+  for i := 0 to 2 do
+    for j := 0 to 1 do
+      MatTran[j, i] := Mat[i, j];
+
+  // menampilkan komponen matrik transpose pada stringgrid2
+  With StringGrid2 do
+    for i := 0 to 1 do
+      for j := 0 to 2 do
+        Cells[j, i] := InttoStr(MatTran[i, j]);
+
+end;
+
+procedure TForm2.BitBtn3Click(Sender: TObject);
+var
+  i, j: integer;
+  MatA, MatB, MatC: array [0 .. 2, 0 .. 1] of integer;
+begin
+  // input matA strgrd3
+  with StringGrid3 do
+    for i := 0 to 2 do
+      for j := 0 to 1 do
+        MatA[i, j] := StrtoInt(Cells[j, i]);
+
+  // input matb strgrd4
+  with StringGrid4 do
+    for i := 0 to 2 do
+      for j := 0 to 1 do
+        MatB[i, j] := StrtoInt(Cells[j, i]);
+
+  // penjumlahan matA+matB
+  for i := 0 to 2 do
+    for j := 0 to 1 do
+      MatC[i, j] := MatA[i, j] + MatB[i, j];
+
+  // output strgrd 5
+  with StringGrid5 do
+    for i := 0 to 2 do
+      for j := 0 to 1 do
+        Cells[j, i] := InttoStr(MatC[i, j]);
+
+end;
+
+end.

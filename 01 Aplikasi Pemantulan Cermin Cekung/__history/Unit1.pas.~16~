@@ -1,0 +1,205 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ToolWin, ActnMan, ActnCtrls, ActnMenus, ExtDlgs, StdCtrls,
+  Buttons, ExtCtrls, Menus;
+
+type
+  TForm1 = class(TForm)
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Panel1: TPanel;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    ListBox1: TListBox;
+    OpenPictureDialog1: TOpenPictureDialog;
+    PopupMenu1: TPopupMenu;
+    MainMenu1: TMainMenu;
+    File1: TMenuItem;
+    Edit4: TMenuItem;
+    Open1: TMenuItem;
+    Save1: TMenuItem;
+    Close1: TMenuItem;
+    Image1: TImage;
+    BukaFoto1: TMenuItem;
+    Run1: TMenuItem;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BukaFoto1Click(Sender: TObject);
+    procedure Edit1Change(Sender: TObject);
+    procedure Edit2Change(Sender: TObject);
+    procedure Edit3Change(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure Close1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.BitBtn1Click(Sender: TObject);
+var f, s1, h1, maxlen, len, i: integer;
+  s2, h2, M:real;
+  s22, sifata:string;
+begin
+f:=strtoint(edit1.text);
+s1:=strtoint(edit2.text);
+h1:=strtoint(edit3.text);
+
+if s1=f then s22:='tak terhingga'
+  else
+    begin
+      s2:=(f*s1)/(s1-f);
+      M:=abs(s2/s1);
+      h2:=M*h1;
+    end;
+
+ListBox1.Clear;
+Listbox1.items.Add('Nama: Firman Qashdus Sabil, 210321606892');
+listbox1.items.add('');
+listbox1.items.add('Rumus: 1/f = 1/s + 1/s''');
+listbox1.items.add('');
+listbox1.items.add('Diketahui: f = '+edit1.text+' cm; s = '+edit2.text+' cm; h = '+edit3.text+' cm');
+listbox1.items.add('');
+listbox1.items.add('Ditanya: s'' = ?; h'' = ?; M = ?');
+listbox1.items.add('');
+listbox1.items.add('Jawab:');
+Listbox1.items.add('-------------');
+listbox1.items.add('');
+listbox1.items.add(' >> 1/f = 1/s + 1/s'''+' -----------> 1/' + edit1.text+' = 1/'+edit2.text+' + 1/s''');
+listbox1.items.add('');
+listbox1.items.add(' >> 1/s'''+' = '+' 1/'+edit1.text+' - 1/'+edit2.text+' = '+' '+edit2.text+'/'+edit1.text+'*'+edit2.text+' - '+edit1.text+'/('+edit1.text+'*'+edit2.text+')'+' = '+' ('+edit2.text+'-'+edit1.text+')/('+edit1.text+'*'+edit2.text+')'+' = '+' '+inttostr(s1-f)+'/'+inttostr(f*s1));
+listbox1.items.add('');
+if s1=f then
+  begin
+    listbox1.items.add(' >> s'''+' = '+' '+inttostr(s1*f)+'/'+inttostr(s1-f)+' = '+' '+s22);
+    listbox1.items.add('');
+    listbox1.items.add('Perbesaran: M = abs(s''/s) = '+'abs('+floattostr(s2)+'/'+floattostr(s1)+') = '+s22);
+    listbox1.items.add('');
+    listbox1.items.add('Tinggi bayangan: h'' = M*h = '+floattostr(M)+'*'+floattostr(h1)+' = '+s22);
+  end
+  else
+    begin
+      listbox1.items.add(' >> s'''+' = '+' '+inttostr(s1*f)+'/'+inttostr(s1-f)+' = '+' '+floattostr(s2)+' cm');
+      listbox1.items.add('');
+      listbox1.items.add('Perbesaran: M = abs(s''/s) = '+'abs('+floattostr(s2)+'/'+floattostr(s1)+') = '+floattostr(M));
+      listbox1.items.add('');
+      listbox1.items.add('Tinggi bayangan: h'' = M*h = '+floattostr(M)+'*'+floattostr(h1)+' = '+floattostr(h2)+' cm');
+    end;
+listbox1.items.add('');
+
+  canvas.font := listbox1.font;
+  maxlen := 500;
+  for i:= 500 To listbox1.items.count-1 do begin
+    len:= canvas.textwidth( listbox1.items[i] );
+    If len > maxlen then
+      maxlen := len;
+  end;
+  canvas.font := font;
+  listbox1.Perform( LB_SETHORIZONTALEXTENT, maxlen, 500 );
+
+if s1<f then
+  ListBox1.items.add('Sifat bayangan: maya, tegak. diperbesar, berada di belakang cermin (ruangIV)')
+  else if s1<(2*f) then
+    listbox1.items.add('Sifat bayangan: nyata, terbalik, diperbesar, berada di depan cermin (ruang III)')
+      else if s1=(2*f) then
+        listbox1.items.add('Sifat bayangan: nyta, terbalik, sama besar, berada di depan cermin (jarak bayangan -  jarak benda)')
+          else
+            listbox1.items.add('sifat bayangan: nyata, terbalik, diperkecil, berada di depan cermin (ruang II)');
+end;
+
+procedure TForm1.BukaFoto1Click(Sender: TObject);
+begin
+  if Openpicturedialog1.execute then
+    image1.picture.loadfromfile(openpicturedialog1.filename);
+
+ListBox1.Items.Add('Nama: Firman Qashdus Sabil, 210321606892');
+Edit1.Enabled:=true;
+Edit2.Enabled:=true;
+Edit3.Enabled:=true;
+end;
+procedure TForm1.Edit1Change(Sender: TObject);
+begin
+ListBox1.Clear;
+  ListBox1.Items.Add('Nama: Daeng Achmad Suaidi, 196902271997021001');
+  ListBox1.Items.Add('');
+  if (edit1.Text <> '') and (edit2.Text <> '')  and (edit3.Text <> '') then
+    begin
+      ListBox1.Items.Add('Rumus: 1/f = 1/s + 1/s''');
+      BitBtn1.Enabled:=true;
+      end
+        else
+          BitBtn1.Enabled:=false;
+end;
+
+procedure TForm1.Edit2Change(Sender: TObject);
+begin
+ ListBox1.Clear;
+  ListBox1.Items.Add('Nama: Daeng Achmad Suaidi, 196902271997021001');
+  ListBox1.Items.Add('');
+  if (edit1.Text <> '') and (edit2.Text <> '')  and (edit3.Text <> '') then
+    begin
+      ListBox1.Items.Add('Rumus: 1/f = 1/s + 1/s''');
+      BitBtn1.Enabled:=true;
+      end
+        else
+          BitBtn1.Enabled:=false;end;
+
+procedure TForm1.Edit3Change(Sender: TObject);
+begin
+ListBox1.Clear;
+  ListBox1.Items.Add('Nama: Daeng Achmad Suaidi, 196902271997021001');
+  ListBox1.Items.Add('');
+  if (edit1.Text <> '') and (edit2.Text <> '')  and (edit3.Text <> '') then
+    begin
+      ListBox1.Items.Add('Rumus: 1/f = 1/s + 1/s''');
+      BitBtn1.Enabled:=true;
+      end
+        else
+          BitBtn1.Enabled:=false;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+Edit1.Enabled:=false;
+Edit2.Enabled:=false;
+Edit3.Enabled:=false;
+BitBtn1.Enabled:=false;
+end;
+procedure TForm1.BitBtn2Click(Sender: TObject);
+begin
+ListBox1.Clear;
+Edit1.Clear;
+Edit2.Clear;
+Edit3.Clear;
+end;
+procedure TForm1.BitBtn3Click(Sender: TObject);
+begin
+Application.Terminate;
+end;
+procedure TForm1.Close1Click(Sender: TObject);
+begin
+Close;
+end;
+
+end.

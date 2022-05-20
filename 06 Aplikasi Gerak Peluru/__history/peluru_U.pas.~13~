@@ -1,0 +1,88 @@
+unit peluru_U;
+
+interface
+
+uses
+   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+   System.Classes, Vcl.Graphics, System.Math,
+   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls,
+   Vcl.ExtCtrls,
+   Vcl.ToolWin, Vcl.ComCtrls, Vcl.ExtDlgs, Vcl.Menus;
+
+type
+   TForm2 = class(TForm)
+      GroupBox1: TGroupBox;
+      GroupBox2: TGroupBox;
+      Edit1: TEdit;
+      Edit2: TEdit;
+      Edit3: TEdit;
+      Edit4: TEdit;
+      Edit5: TEdit;
+      Edit6: TEdit;
+      Edit7: TEdit;
+      Edit8: TEdit;
+      Edit9: TEdit;
+      Edit10: TEdit;
+      Edit11: TEdit;
+      Label1: TLabel;
+      Label2: TLabel;
+      Label3: TLabel;
+      Label4: TLabel;
+      Label5: TLabel;
+      Label6: TLabel;
+      Label7: TLabel;
+      Label8: TLabel;
+      Label9: TLabel;
+      Label10: TLabel;
+      Label11: TLabel;
+      btnProcess: TButton;
+      BitBtn1: TBitBtn;
+      procedure btnProcessClick(Sender: TObject);
+   private
+      { Private declarations }
+   public
+      { Public declarations }
+   end;
+
+var
+   Form2: TForm2;
+   x, y, v0x, v0y, tmax, t, g, alfa, PosX, PosY, sudut, x_nol, v0, xmax, hmax,
+      dhmax: real;
+   xc, yc, n, i, index, ground, dasar: integer;
+   // Data Input
+   elevasi, Velocity, x0: string;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm2.btnProcessClick(Sender: TObject);
+begin
+var
+Vo, tetha, t, Vx, X, Vy, Y, Xmax, Ymax, tmax, tter: real;
+const
+g=10;
+begin
+Vo:=StrToFloat (Edit1. Text);
+tetha:=StrToFloat (Edit2 .Text) ;
+t:=StrToFloat (Edit3. Text);
+Vx:=Vo*cos(tetha*(pi/180)) ;
+X:=Vo*cos(tetha*(pi/180) )*t;
+Vy:=Vo*sin(tetha*(pi/180))-g*t;
+Y:=Vo*sin(tetha*(pi/180) )*t-1/2*g*t*t;
+Xmax:=Vo*Vo*sin(2*tetha*(pi/180))/g;
+Ymax:=Vo*Vo*sin(tetha*(pi/180) ) *sin (tetha* (pi/180) )/ (2*g) ;
+tmax:=Vo*sin (tetha*(pi/180) ) /g;
+tter:=2*Vo*sin (tetha*(pi/180) ) /g;
+Edit4.Text:=FormatFloat ('o.##', Xmax);
+Edit5.Text:=FormatFloat ('0.##', Ymax) ;
+Edit6.Text:=FormatFloat ('0.##', tmax) ;
+Edit7.Text:=FormatFloat ('0.##',tter);
+Edit8.Text:=FormatFloat ('0.##', Vx);
+Edit9.Text:=FormatFloat ('0.##',X);
+Edit10.Text:=FormatFloat ('0.##',Vy);
+Edit11.Text:=FormatFloat ('0.##',Y);
+end;
+end;
+
+end.
