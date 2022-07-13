@@ -4,7 +4,6 @@
 Compatible with Delphi version 10+. Open .dproj file
 
 ## Delphi 7 & lower
-> read the description below
 1. Open .dpr file
 2. updated soon 
    > delete "Vcl." attribute or direclty copy code below, delete .res file, re run
